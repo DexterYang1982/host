@@ -3,8 +3,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     id("org.springframework.boot") version "2.1.6.RELEASE"
     id("io.spring.dependency-management") version "1.0.7.RELEASE"
-    kotlin("jvm") version "1.2.71"
-    kotlin("plugin.spring") version "1.2.71"
+    kotlin("jvm") version "1.3.40"
+    kotlin("plugin.spring") version "1.3.40"
 }
 
 group = "net.gridtech"
@@ -16,8 +16,8 @@ repositories {
 }
 
 dependencies {
-    implementation(project("exchange"))
-    implementation(project("repository-spring"))
+    implementation(project(":exchange"))
+    implementation(project(":repository-spring"))
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
