@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: Root Switcher
+  data:
+    mongodb:
+      uri: mongodb://localhost:27018/host_root
+server:
+  port: 8080
+host:
+  node-id: ROOT
+  node-secret: ROOT
