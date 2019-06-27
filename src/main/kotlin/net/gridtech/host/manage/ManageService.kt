@@ -1,9 +1,6 @@
 package net.gridtech.host.manage
 
-import net.gridtech.core.data.IField
-import net.gridtech.core.data.IHostInfo
-import net.gridtech.core.data.INode
-import net.gridtech.core.data.INodeClass
+import net.gridtech.core.data.*
 import net.gridtech.core.util.*
 import net.gridtech.host.service.BootService
 import net.gridtech.repository.data.Field
@@ -167,5 +164,7 @@ class ManageService {
     fun fieldValueUpdate(nodeId: String, fieldKey: String, value: String, session: String? = null) =
             fieldValueService.setFieldValueByFieldKey(nodeId, fieldKey, value, session)
 
+    fun fieldValueGet(nodeId: String, fieldKey: String): IFieldValue? =
+            fieldValueService.getFieldValueByFieldKey(nodeId, fieldKey)
 
 }
