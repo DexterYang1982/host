@@ -1,6 +1,6 @@
 package net.gridtech.host.config
 
-import net.gridtech.core.hostInfo
+import net.gridtech.core.Bootstrap
 import net.gridtech.core.util.ID_NODE_ROOT
 import net.gridtech.core.util.KEY_FIELD_SECRET
 import net.gridtech.host.manage.ManageService
@@ -24,8 +24,8 @@ class WebSecurityConfig : WebMvcConfigurer {
             override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
                 val nodeId = request.getHeader("nodeId")
                 val nodeSecret = request.getHeader("nodeSecret")
-                val secretOfHostNode = hostInfo?.let { hostInfo ->
-                    manageService.fieldValueGet(hostInfo.nodeId, KEY_FIELD_SECRET)
+                val secretOfHostNode = Bootstrap.hostInfo?.let {
+                    manageService.fieldValueGet(it.nodeId, KEY_FIELD_SECRET)
                 }
                 val result = (secretOfHostNode != null && secretOfHostNode.value == nodeSecret && secretOfHostNode.nodeId == nodeId) &&
                         (request.method == HttpMethod.GET.name || nodeId == ID_NODE_ROOT)

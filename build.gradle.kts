@@ -18,6 +18,7 @@ repositories {
 dependencies {
     implementation(project(":exchange"))
     implementation(project(":repository-spring"))
+    implementation(project(":master-spring"))
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.springframework.boot:spring-boot-starter-websocket")
