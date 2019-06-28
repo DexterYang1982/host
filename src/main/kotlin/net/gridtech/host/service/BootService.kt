@@ -5,6 +5,7 @@ import net.gridtech.core.data.IHostInfo
 import net.gridtech.core.util.ID_NODE_ROOT
 import net.gridtech.core.util.hostInfoPublisher
 import net.gridtech.host.info.HostInfoService
+import net.gridtech.master.HostMaster
 import net.gridtech.repository.data.FieldDao
 import net.gridtech.repository.data.FieldValueDao
 import net.gridtech.repository.data.NodeClassDao
@@ -28,6 +29,8 @@ class BootService {
 
     lateinit var bootstrap: Bootstrap
 
+    lateinit var hostMaster: HostMaster
+
 
     @PostConstruct
     fun start() {
@@ -39,6 +42,7 @@ class BootService {
                 nodeDao,
                 fieldValueDao
         )
+        hostMaster = HostMaster(bootstrap)
     }
 
     private fun hostInfoChanged(hostInfo: IHostInfo) {

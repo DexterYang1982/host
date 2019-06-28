@@ -13,15 +13,15 @@ import javax.annotation.PostConstruct
 @Service
 class ManageService {
     @Autowired
-    lateinit var bootService: BootService
+    private lateinit var bootService: BootService
 
-    val nodeClassService
+    private val nodeClassService
         get() = bootService.bootstrap.nodeClassService
-    val fieldService
+    private val fieldService
         get() = bootService.bootstrap.fieldService
-    val nodeService
+    private val nodeService
         get() = bootService.bootstrap.nodeService
-    val fieldValueService
+    private val fieldValueService
         get() = bootService.bootstrap.fieldValueService
 
     @PostConstruct
@@ -133,7 +133,7 @@ class ManageService {
                     Node::class,
                     id)!!
 
-    fun nodeAdd(id: String, nodeClass: INodeClass, name: String, alias: String, description: String, tags: List<String>, parent: Node?, externalScope: List<String>): Node {
+    fun nodeAdd(id: String, nodeClass: INodeClass, name: String, alias: String, description: String, tags: List<String>, parent: INode?, externalScope: List<String>): Node {
         APIExceptionEnum.ERR02_ID_EXISTS.assert(nodeService.getById(id),
                 Node::class, id)
         APIExceptionEnum.ERR20_ROOT_NODE_IS_SINGLETON.assert(id == ID_NODE_ROOT && nodeClass.id == ID_NODE_CLASS_ROOT, Node::class, id)
@@ -144,11 +144,10 @@ class ManageService {
         }
     }
 
-    fun nodeUpdate(id: String, name: String, alias: String, description: String) {
+    fun nodeUpdate(id: String, name: String, alias: String, description: String) =
         Node.update(nodeGetById(id), name, alias, description).apply {
             nodeService.save(this)
         }
-    }
 
     fun nodeDelete(id: String) {
         val toDelete = nodeGetById(id)
