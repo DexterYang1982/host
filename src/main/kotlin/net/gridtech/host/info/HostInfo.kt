@@ -17,7 +17,7 @@ data class HostInfo(
         var id: String = "default",
         override var nodeId: String,
         override var nodeSecret: String,
-        override var parentAddress: String?
+        override var parentEntryPoint: String?
 ) : IHostInfo
 
 @Repository
@@ -30,7 +30,7 @@ interface HostInfoRepository : MongoRepository<HostInfo, String> {
 class HostInfoService {
     var nodeId: String? = null
     var nodeSecret: String? = null
-    var parentAddress: String? = null
+    var parentEntryPoint: String? = null
 
     @Autowired
     lateinit var repository: HostInfoRepository
@@ -41,7 +41,7 @@ class HostInfoService {
             hostInfo = HostInfo(
                     nodeId = nodeId!!,
                     nodeSecret = nodeSecret!!,
-                    parentAddress = parentAddress
+                    parentEntryPoint = parentEntryPoint
             )
         }
     }
@@ -53,7 +53,7 @@ class HostInfoService {
                 repository.save(HostInfo(
                         nodeId = value.nodeId,
                         nodeSecret = value.nodeSecret,
-                        parentAddress = value.parentAddress
+                        parentEntryPoint = value.parentEntryPoint
                 ))
             }
         }
