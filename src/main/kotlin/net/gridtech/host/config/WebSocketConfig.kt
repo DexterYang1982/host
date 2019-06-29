@@ -1,7 +1,7 @@
 package net.gridtech.host.config
 
 import net.gridtech.core.util.KEY_FIELD_SECRET
-import net.gridtech.core.util.PEER_ID
+import net.gridtech.core.util.INSTANCE_ID
 import net.gridtech.host.manage.ManageService
 import net.gridtech.host.service.BootService
 import org.springframework.beans.factory.annotation.Autowired
@@ -45,17 +45,17 @@ class WebSocketConfig : WebSocketConfigurer {
                         val resp = response as ServletServerHttpResponse
                         val nodeId = req.servletRequest.getParameter("nodeId")
                         val nodeSecret = req.servletRequest.getParameter("nodeSecret")
-                        val peer = req.servletRequest.getParameter("peer")
+                        val instance = req.servletRequest.getParameter("instance")
 
-                        if (nodeId == null || nodeSecret == null || peer == null) {
+                        if (nodeId == null || nodeSecret == null || instance == null) {
                             resp.setStatusCode(HttpStatus.FORBIDDEN)
                             return false
                         }
                         val secretFieldValue = manageService.fieldValueGet(nodeId, KEY_FIELD_SECRET)
                         return if (secretFieldValue != null && secretFieldValue.value == nodeSecret) {
                             attributes["nodeId"] = nodeId
-                            attributes["peer"] = peer
-                            resp.servletResponse.setHeader("peer", PEER_ID)
+                            attributes["instance"] = instance
+                            resp.servletResponse.setHeader("instance", INSTANCE_ID)
                             true
                         } else {
                             resp.setStatusCode(HttpStatus.FORBIDDEN)
