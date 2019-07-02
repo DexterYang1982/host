@@ -17,9 +17,9 @@ class ManageController {
     lateinit var manageService: ManageService
 
     @RequestMapping(value = ["/nodeClassGetById"], method = [RequestMethod.GET])
-    fun nodeClassGetById(@RequestParam("nodeClassId")
-                         nodeClassId: String): ResponseEntity<INodeClass> =
-            ResponseEntity.ok(manageService.nodeClassGetById(nodeClassId))
+    fun nodeClassGetById(@RequestParam("id")
+                         id: String): ResponseEntity<INodeClass> =
+            ResponseEntity.ok(manageService.nodeClassGetById(id))
 
 
     @RequestMapping(value = ["/nodeClassAdd"], method = [RequestMethod.POST])
@@ -31,14 +31,15 @@ class ManageController {
                      alias: String,
                      @RequestParam("connectable")
                      connectable: Boolean,
-                     @RequestParam("tags")
-                     tags: List<String>,
+                     @RequestParam("tags", required = false)
+                     tags: List<String>?,
                      @RequestBody
                      description: String): ResponseEntity<INodeClass> =
-            ResponseEntity.ok(manageService.nodeClassAdd(id, name, alias, description, connectable, tags))
+            ResponseEntity.ok(manageService.nodeClassAdd(id, name, alias, description, connectable, tags
+                    ?: emptyList()))
 
 
-    @RequestMapping(value = ["/nodeClassUpdate"], method = [RequestMethod.POST])
+    @RequestMapping(value = ["/nodeClassUpdate"], method = [RequestMethod.PUT])
     fun nodeClassUpdate(@RequestParam("id")
                         id: String,
                         @RequestParam("name")
@@ -56,9 +57,9 @@ class ManageController {
             ResponseEntity.ok(manageService.nodeClassDelete(id))
 
     @RequestMapping(value = ["/fieldGetById"], method = [RequestMethod.GET])
-    fun fieldGetById(@RequestParam("fieldId")
-                     fieldId: String): ResponseEntity<IField> =
-            ResponseEntity.ok(manageService.fieldGetById(fieldId))
+    fun fieldGetById(@RequestParam("id")
+                     id: String): ResponseEntity<IField> =
+            ResponseEntity.ok(manageService.fieldGetById(id))
 
     @RequestMapping(value = ["/fieldAdd"], method = [RequestMethod.POST])
     fun fieldAdd(@RequestParam("key")
@@ -69,8 +70,8 @@ class ManageController {
                  name: String,
                  @RequestParam("alias")
                  alias: String,
-                 @RequestParam("tags")
-                 tags: List<String>,
+                 @RequestParam("tags", required = false)
+                 tags: List<String>?,
                  @RequestParam("through")
                  through: Boolean,
                  @RequestBody
@@ -79,11 +80,11 @@ class ManageController {
                     manageService.fieldAdd(
                             key,
                             manageService.nodeClassGetById(nodeClassId),
-                            name, alias, description, tags, through)
+                            name, alias, description, tags ?: emptyList(), through)
             )
 
 
-    @RequestMapping(value = ["/fieldUpdate"], method = [RequestMethod.POST])
+    @RequestMapping(value = ["/fieldUpdate"], method = [RequestMethod.PUT])
     fun fieldUpdate(@RequestParam("id")
                     id: String,
                     @RequestParam("name")
@@ -100,9 +101,9 @@ class ManageController {
             ResponseEntity.ok(manageService.fieldDelete(id))
 
     @RequestMapping(value = ["/nodeGetById"], method = [RequestMethod.GET])
-    fun nodeGetById(@RequestParam("nodeId")
-                    nodeId: String): ResponseEntity<*> =
-            ResponseEntity.ok(manageService.nodeGetById(nodeId))
+    fun nodeGetById(@RequestParam("id")
+                    id: String): ResponseEntity<*> =
+            ResponseEntity.ok(manageService.nodeGetById(id))
 
     @RequestMapping(value = ["/nodeAdd"], method = [RequestMethod.POST])
     fun nodeAdd(@RequestParam("id")
@@ -113,25 +114,25 @@ class ManageController {
                 name: String,
                 @RequestParam("alias")
                 alias: String,
-                @RequestParam("tags")
-                tags: List<String>,
+                @RequestParam("tags", required = false)
+                tags: List<String>?,
                 @RequestParam("parentId")
                 parentId: String,
-                @RequestParam("externalScope")
-                externalScope: List<String>,
+                @RequestParam("externalScope", required = false)
+                externalScope: List<String>?,
                 @RequestBody
                 description: String): ResponseEntity<INode> =
             ResponseEntity.ok(
                     manageService.nodeAdd(
                             id,
                             manageService.nodeClassGetById(nodeClassId),
-                            name, alias, description, tags,
+                            name, alias, description, tags ?: emptyList(),
                             manageService.nodeGetById(parentId),
-                            externalScope)
+                            externalScope ?: emptyList())
             )
 
 
-    @RequestMapping(value = ["/nodeUpdate"], method = [RequestMethod.POST])
+    @RequestMapping(value = ["/nodeUpdate"], method = [RequestMethod.PUT])
     fun nodeUpdate(@RequestParam("id")
                    id: String,
                    @RequestParam("name")

@@ -137,7 +137,7 @@ class ManageService {
     fun nodeAdd(id: String, nodeClass: INodeClass, name: String, alias: String, description: String, tags: List<String>, parent: INode?, externalScope: List<String>): Node {
         APIExceptionEnum.ERR02_ID_EXISTS.assert(nodeService.getById(id),
                 Node::class, id)
-        APIExceptionEnum.ERR20_ROOT_NODE_IS_SINGLETON.assert(id == ID_NODE_ROOT && nodeClass.id == ID_NODE_CLASS_ROOT, Node::class, id)
+        APIExceptionEnum.ERR20_ROOT_NODE_IS_SINGLETON.assert(if (nodeClass.id == ID_NODE_CLASS_ROOT) id == ID_NODE_ROOT else true, Node::class, id)
         return Node.create(
                 id, nodeClass, name, alias, description, tags, parent, externalScope
         ).apply {
@@ -146,9 +146,9 @@ class ManageService {
     }
 
     fun nodeUpdate(id: String, name: String, alias: String, description: String) =
-        Node.update(nodeGetById(id), name, alias, description).apply {
-            nodeService.save(this)
-        }
+            Node.update(nodeGetById(id), name, alias, description).apply {
+                nodeService.save(this)
+            }
 
     fun nodeDelete(id: String) {
         val toDelete = nodeGetById(id)

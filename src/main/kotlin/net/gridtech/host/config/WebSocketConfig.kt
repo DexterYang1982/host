@@ -46,7 +46,6 @@ class WebSocketConfig : WebSocketConfigurer {
                         val nodeId = req.servletRequest.getParameter("nodeId")
                         val nodeSecret = req.servletRequest.getParameter("nodeSecret")
                         val instance = req.servletRequest.getParameter("instance")
-
                         if (nodeId == null || nodeSecret == null || instance == null) {
                             resp.setStatusCode(HttpStatus.FORBIDDEN)
                             return false
