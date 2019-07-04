@@ -2,7 +2,6 @@ package net.gridtech.host.manage
 
 import net.gridtech.core.data.*
 import net.gridtech.core.util.*
-import net.gridtech.exception.APIExceptionEnum
 import net.gridtech.host.service.BootService
 import net.gridtech.repository.data.Field
 import net.gridtech.repository.data.Node
@@ -52,7 +51,7 @@ class ManageService {
                     emptyList(),
                     emptyList()
             )
-            fieldValueUpdate(ID_NODE_ROOT, KEY_FIELD_SECRET, hostInfo.nodeSecret)
+            fieldValueUpdateByFieldKey(ID_NODE_ROOT, KEY_FIELD_SECRET, hostInfo.nodeSecret)
         }
     }
 
@@ -162,8 +161,12 @@ class ManageService {
         nodeService.delete(id)
     }
 
-    fun fieldValueUpdate(nodeId: String, fieldKey: String, value: String, session: String? = null) =
+    fun fieldValueUpdateByFieldKey(nodeId: String, fieldKey: String, value: String, session: String? = null) =
             fieldValueService.setFieldValueByFieldKey(nodeId, fieldKey, value, session)
+
+
+    fun fieldValueUpdate(nodeId: String, fieldId: String, value: String, session: String? = null) =
+            fieldValueService.setFieldValue(nodeId, fieldId, value, session)
 
     fun fieldValueGet(nodeId: String, fieldKey: String): IFieldValue? =
             fieldValueService.getFieldValueByFieldKey(nodeId, fieldKey)

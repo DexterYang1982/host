@@ -160,15 +160,27 @@ class ManageController {
             ResponseEntity.ok(manageService.fieldValueGet(nodeId, fieldKey) ?: FieldValue.empty())
 
 
-    @RequestMapping(value = ["/fieldValueSetByFieldKey"], method = [RequestMethod.POST])
-    fun fieldValueSetByFieldKey(@RequestParam("nodeId")
-                                nodeId: String,
-                                @RequestParam("fieldKey")
-                                fieldKey: String,
-                                @RequestParam("session")
-                                session: String,
-                                @RequestBody
-                                value: String): ResponseEntity<*> =
-            ResponseEntity.ok(manageService.fieldValueUpdate(nodeId, fieldKey, value, session))
+    @RequestMapping(value = ["/fieldValueUpdateByFieldKey"], method = [RequestMethod.POST])
+    fun fieldValueUpdateByFieldKey(@RequestParam("nodeId")
+                                   nodeId: String,
+                                   @RequestParam("fieldKey")
+                                   fieldKey: String,
+                                   @RequestParam("session")
+                                   session: String,
+                                   @RequestBody
+                                   value: String): ResponseEntity<*> =
+            ResponseEntity.ok(manageService.fieldValueUpdateByFieldKey(nodeId, fieldKey, value, session))
+
+
+    @RequestMapping(value = ["/fieldValueUpdate"], method = [RequestMethod.POST])
+    fun fieldValueUpdate(@RequestParam("nodeId")
+                         nodeId: String,
+                         @RequestParam("fieldId")
+                         fieldId: String,
+                         @RequestParam("session")
+                         session: String,
+                         @RequestBody
+                         value: String): ResponseEntity<*> =
+            ResponseEntity.ok(manageService.fieldValueUpdate(nodeId, fieldId, value, session))
 
 }
