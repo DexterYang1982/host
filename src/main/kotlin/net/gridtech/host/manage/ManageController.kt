@@ -118,8 +118,10 @@ class ManageController {
                 tags: List<String>?,
                 @RequestParam("parentId")
                 parentId: String,
-                @RequestParam("externalScope", required = false)
-                externalScope: List<String>?,
+                @RequestParam("externalNodeIdScope", required = false)
+                externalNodeIdScope: List<String>?,
+                @RequestParam("externalNodeClassTagScope", required = false)
+                externalNodeClassTagScope: List<String>?,
                 @RequestBody
                 description: String): ResponseEntity<INode> =
             ResponseEntity.ok(
@@ -128,7 +130,8 @@ class ManageController {
                             manageService.nodeClassGetById(nodeClassId),
                             name, alias, description, tags ?: emptyList(),
                             manageService.nodeGetById(parentId),
-                            externalScope ?: emptyList())
+                            externalNodeIdScope ?: emptyList(),
+                            externalNodeClassTagScope ?: emptyList())
             )
 
 

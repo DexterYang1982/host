@@ -49,6 +49,7 @@ class ManageService {
                     "internal",
                     emptyList(),
                     null,
+                    emptyList(),
                     emptyList()
             )
             fieldValueUpdate(ID_NODE_ROOT, KEY_FIELD_SECRET, hostInfo.nodeSecret)
@@ -134,12 +135,12 @@ class ManageService {
                     Node::class,
                     id)!!
 
-    fun nodeAdd(id: String, nodeClass: INodeClass, name: String, alias: String, description: String, tags: List<String>, parent: INode?, externalScope: List<String>): Node {
+    fun nodeAdd(id: String, nodeClass: INodeClass, name: String, alias: String, description: String, tags: List<String>, parent: INode?, externalNodeIdScope: List<String>, externalNodeClassTagScope: List<String>): Node {
         APIExceptionEnum.ERR02_ID_EXISTS.assert(nodeService.getById(id),
                 Node::class, id)
         APIExceptionEnum.ERR20_ROOT_NODE_IS_SINGLETON.assert(if (nodeClass.id == ID_NODE_CLASS_ROOT) id == ID_NODE_ROOT else true, Node::class, id)
         return Node.create(
-                id, nodeClass, name, alias, description, tags, parent, externalScope
+                id, nodeClass, name, alias, description, tags, parent, externalNodeIdScope, externalNodeClassTagScope
         ).apply {
             nodeService.save(this)
         }
