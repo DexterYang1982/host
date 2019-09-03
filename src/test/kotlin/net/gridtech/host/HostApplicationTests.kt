@@ -14,3 +14,27 @@ class HostApplicationTests {
     }
 
 }
+
+
+abstract class A<T>(i: T) {
+    var source: T = i
+    fun getS(): T = source
+}
+
+class B : A<String>("hello"){
+    var name="Sally"
+
+    fun haha():A<String>? = null
+}
+
+fun main() {
+    val bb=B()
+    val clazz=bb::class.java
+
+    clazz.methods
+    clazz.methods.forEach {
+        println(it.name)
+        println(it.returnType==A::class.java)
+    }
+
+}
